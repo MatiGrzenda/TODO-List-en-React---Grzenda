@@ -1,18 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Fila(props) {
-    const tachar = (e) => {
-        let listaTemporal = props.lista;
-        if (e.target.checked) {
-            listaTemporal[props.index].activo = false;
-            listaTemporal[props.index].fechaTachado = new Date();
-        }
-        else listaTemporal[props.index].activo = true;
-
-        props.setLista(listaTemporal);
-    }
-
     let clase = "", finalizacion = "";
+    const [checkbox, setCheckbox] = useState(false);
+
+    /*if (!props.lista[props.index].activo) setCheckbox(true);
+    else setCheckbox(false);*/
+
+    const tachar = (e) => {
+        if (e.target.checked) {
+            setCheckbox(true);
+            props.setLista(props.lista.map((item, index) => {
+                if (index === props.index) {
+                    item.activo = false;
+                    item.fechaTachado = new Date();
+                }
+                return item;
+            }));
+        }
+        else props.setLista(props.lista.map((item, index) => {
+            setCheckbox(false);
+            if (index === props.index) {
+                item.activo = true;
+            }
+            return item;
+        }));
+    }
 
     if (!props.activo) {
         clase = "tachado";
@@ -24,7 +37,7 @@ export default function Fila(props) {
     return (
         <>
             <tr>
-                <th scope="row"><input type="checkbox" onChange={tachar} className="form-check-input"></input></th>
+                <th scope="row"><input type="checkbox" onChange={tachar} className={"form-check-input checkbox-" + clase} checked={checkbox}></input></th>
                 <td className={clase}>{props.entrada}</td>
                 <td>{props.fechaCreacion.toLocaleTimeString()}, {props.fechaCreacion.toLocaleDateString("en-GB")}</td>
                 <td>{finalizacion}</td>

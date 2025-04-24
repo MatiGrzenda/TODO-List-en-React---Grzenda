@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 export default function Input(props) {
-    const [text, setText] = useState();
+    const [text, setText] = useState("");
     const nuevaEntrada = (e) => {
         e.preventDefault();
         const fechaCreacion = new Date();
