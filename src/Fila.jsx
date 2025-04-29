@@ -23,6 +23,10 @@ export default function Fila(props) {
     const eliminarEntrada = () => {
         if (confirm("Está seguro que desea eliminar la tarea? No se podrá recuperar.")) {
             props.setLista(props.lista.filter((_, index) => index !== props.index));
+            if (props.lista.length == 1) {
+                props.setLista([]);
+                localStorage.removeItem("lista");
+            }
         }
     };
 
