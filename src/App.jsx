@@ -4,14 +4,15 @@ import Titulo from "./Titulo";
 import Boton from "./Boton";
 
 function App() {
-  const [lista, setLista] = useState([]);
-  if (localStorage.getItem("lista") != null) {
+  const [lista, setLista] = useState(JSON.parse(localStorage.getItem("lista")).map((element) => {
+    return { entrada: element.entrada, fechaCreacion: new Date(element.fechaCreacion), activo: element.activo, fechaTachado: new Date(element.fechaTachado) };
+  }));
+  /*if (localStorage.getItem("lista") != null) {
     setLista(JSON.parse(localStorage.getItem("lista")));
-    const listaTemporal = lista.map((element) => {
+    setLista(lista.map((element) => {
       return { entrada: element.entrada, fechaCreacion: new Date(element.fechaCreacion), activo: element.activo, fechaTachado: new Date(element.fechaTachado) };
-    })
-    setLista(listaTemporal);
-  }
+    }));
+  }*/
 
   return (
     <>
